@@ -67,17 +67,21 @@ class UserAuthentication extends BaseController
 
         if(!$this->request->is('post')){
             error_log("=== Request is a get, returning view ===");
-            return view('authentication/signup', $data);
+            return view("layouts/header", $data)
+                    . view("authentication/signup")
+                    . view("layouts/footer");
         }
 
         error_log("=== Request a post, processing ===");
 
-        $post_data = $this->request->getPost(['email','password','cpassword']);
+        $post_data = $this->request->getPost(['email','password','cpassword','security-question','security-answer']);
 
         if(!$this->validateData($post_data,[
             'email' => 'required|valid_email',
             'password' => 'required',
-            'cpassword' => 'required'
+            'cpassword' => 'required',
+            'security-question' => 'required',
+            'security-answer' => 'required'
         ])){
             error_log("=== Data validation failed, returning ===");
             return view("layouts/header", $data)
@@ -94,9 +98,13 @@ class UserAuthentication extends BaseController
         }
         $model = model(UserAuthenticationModel::class);
 
+        error_log($post_data['security-question']);
+        error_log($post_data['security-answer']);
         $model->save([
             'email' => $post_data['email'],
-            'password' => md5($post_data['password'])
+            'password' => md5($post_data['password']),
+            'security_question' => $post_data['security-question'],
+            'security_answer' => $post_data['security-answer']
         ]);
 
 
@@ -108,5 +116,100 @@ class UserAuthentication extends BaseController
     public function signout(){
         session()->destroy();
         return redirect()->route('login');
+    }
+
+    public function reset(){
+        error_log("=== Reset ran ===");
+        helper('form');
+
+        if(!$this->request->is('post')){
+            error_log("=== Get request===");
+            return view("layouts/header", ['title'=>'Password reset'])
+                    . view("authentication/reset")
+                    . view("layouts/footer");
+        }
+
+        $model = model(UserAuthenticationModel::class);
+        $post_data = $this->request->getPost(['email', 'security-answer']);
+        $user_id = $model->getUserId($post_data['email']);
+
+        if(!$user_id){
+            session()->setFlashdata('error', 'Invalid email address');
+
+            return view("layouts/header", ['title'=>'Password reset'])
+                    . view("authentication/reset")
+                    . view("layouts/footer");
+        }else if($user_id && isset($post_data['email']) && !isset($post_data['security-answer'])){
+            error_log("=== Show security question === ");
+
+            $userQuestion = $model->getSecurityQuestion($user_id);
+
+            $data = [
+                'title' => 'Password reset',
+                'sQuestion' => $userQuestion,
+                'email' => $post_data['email']
+            ];
+
+            error_log($post_data['security-answer']);
+
+            return view("layouts/header",$data)
+                    . view("authentication/reset")
+                    . view("layouts/footer");
+        }else if ($user_id && isset($post_data['email']) && isset($post_data['security-answer'])){
+            error_log("=== output random password === ");
+
+            //Check answer correct
+
+            if(!$model->verifySecurityAnswer($user_id, $post_data['security-answer'])){
+
+                $userQuestion = $model->getSecurityQuestion($user_id);
+                $data = [
+                    'title' => 'Password reset',
+                    'sQuestion' => $userQuestion,
+                    'email' => $post_data['email']
+                ];
+
+                session()->setFlashdata("error", "Incorrect security answer. Please try again");
+
+
+                return view("layouts/header",$data)
+                        . view("authentication/reset")
+                        . view("layouts/footer");
+            }
+            $randPwd = $this->random_password();
+            $data = [
+                'title' => 'Password reset',
+                'email' => $post_data['email'],
+                'new_pwd' => $randPwd
+            ];
+
+            $model->updateUserData($user_id, $randPwd);
+
+            return view("layouts/header",$data)
+                    . view("authentication/reset")
+                    . view("layouts/footer");
+
+        }
+
+
+
+
+
+    }
+
+    public function resetUser($id = null){
+        $model = model(UserAuthenticationModel::class);
+        $user = $model->getSecurityQuestion($id);
+        error_log(print_r($user));
+
+        return view("layouts/header", ['title'=>'Password reset'])
+                . view("authentication/reset")
+                . view("layouts/footer");
+    }
+
+    private function random_password() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+=-<>?/,.';
+        $password = str_shuffle($alphabet);
+        return substr($password, 0, 12);
     }
 }

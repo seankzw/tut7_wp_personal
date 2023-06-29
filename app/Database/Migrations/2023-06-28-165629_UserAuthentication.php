@@ -11,11 +11,13 @@ class UserAuthentication extends Migration
         $this->forge->addField([
             'id' => ['type' => 'INT', 'auto_increment' => true],
             'email' => ['type'=> 'VARCHAR', 'constraint' => 200],
-            'password'=>['type'=>'VARCHAR', 'constraint' => 200]
+            'password'=>['type'=>'VARCHAR', 'constraint' => 200],
+            'security_question'=>['type'=>'VARCHAR', 'constraint' => 200],
+            'security_answer'=>['type'=>'VARCHAR', 'constraint' => 200]
         ]);
 
         $this->forge->addKey('id',true);
-        $this->forge->createTable('user');
+        $this->forge->createTable('users');
     }
 
     public function down()

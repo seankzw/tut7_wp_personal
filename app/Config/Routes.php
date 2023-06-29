@@ -38,6 +38,9 @@ $routes->match(['get','post'], '/login', [UserAuthentication::class, 'login']);
 $routes->match(['get','post'], '/signup', [UserAuthentication::class, 'signup']);
 $routes->get("/dashboard", [Home::class, 'index']);
 $routes->get('/signout', [UserAuthentication::class, 'signout']);
+$routes->match(['get','post'],'/reset', [UserAuthentication::class, 'reset']);
+$routes->match(['get','post'],'/reset/(:num)', [UserAuthentication::class, 'resetUser']);
+
 
 /*
  * --------------------------------------------------------------------

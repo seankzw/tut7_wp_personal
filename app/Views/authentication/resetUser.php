@@ -9,23 +9,20 @@
     </div>
 <?php endif; ?>
 
-<form method='post' action='<?= base_url('/signup') ?>'>
+<form method='post' action='<?= base_url('/reset') ?>'>
     <label for="email">Email</label>
     <input name="email" type="email" />
     <br/>
-    <label for="password">Password</label>
-    <input name="password" type="password"/>
+    <label for='security-question'>Security Question: </label>
+    sQuestion . "<br/>
+    <label for="security-answer">Security Answer: </label>
+    <input name="security-answer" type="text" />
+    <?php if(isset($new_pwd) && $new_pwd){
+        echo "Your new password is " . $new_pwd;
+    }
+    ?>
     <br/>
-    <label for="cpassword">Confirm Password</label>
-    <input name="cpassword" type="password"/>
-    </br>
-    <label for="security-question">Security question</label>
-    <input name="security-question" type="text"/>
-    </br>
-    <label for="security-answer">Security answer</label>
-    <input name="security-answer" type="text"/>
-    </br>
-    <button type="submit">Sign up</button>
-    </br>
+    <button type="submit">Reset password</button>
+    <br/>
     Already have an account? <a href="<?= base_url('login')?>">Login</a>
 </form>
