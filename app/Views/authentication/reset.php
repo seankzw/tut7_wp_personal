@@ -1,4 +1,4 @@
-<h1><?= $title ?></h1>
+<h1 class="p-5"><?= $title ?></h1>
 <p style='color:red;font-weight:bold'><?= session()->getFlashdata('error') ?></p>
 <?= validation_list_errors() ?>
 
@@ -9,22 +9,31 @@
     </div>
 <?php endif; ?>
 
-<form method='post' action='<?= base_url('/reset') ?>'>
-    <label for="email">Email</label>
-    <input name="email" type="email" value='<?= isset($email) ? $email : '' ?>'/>
-    <?php if(isset($sQuestion) && $sQuestion){
-        echo "<br/>";
-        echo "<label for='security-question'>Security Question: </label>";
-        echo $sQuestion . "<br/>";
-        echo '<label for="security-answer">Security Answer: </label>';
-        echo '<input name="security-answer" type="text" />';
-    }?>
-    <?php if(isset($new_pwd) && $new_pwd){
-        echo "<br/>Your new password is  <span style='color:red'>" . $new_pwd . "</span>";
-    }
-    ?>
-    <br/>
-    <button type="submit">Reset password</button>
-    <br/>
-    Already have an account? <a href="<?= base_url('login')?>">Login</a>
-</form>
+<div class="p-5">
+    <form method='post' action='<?= base_url('/reset') ?>'>
+        <div class="mb-5">
+            <label for="email" class="form-label">Email</label>
+            <input name="email" type="email" class="form-control" value='<?= isset($email) ? $email : '' ?>'/>
+        </div>
+        <?php if(isset($sQuestion) && $sQuestion){
+            echo "<div class='mb-5'>";
+            echo "<label for='security-question' class='form-label'>Security Question: </label>";
+            echo $sQuestion . "<br/>";
+            echo "</div>";
+            echo "<div class='mb-5'>";
+            echo '<label for="security-answer" class="form-label">Security Answer: </label>';
+            echo '<input name="security-answer" type="text" class="form-control"/>';
+            echo "</div>";
+        }?>
+        <?php if(isset($new_pwd) && $new_pwd){
+            echo "Your new password is  <span style='color:red'>" . $new_pwd . "</span>";
+        }
+        ?>
+        <div class="mb-5 text-center">
+            <button type="submit" class="btn btn-primary">Reset password</button>
+        </div>
+        <div class="mb-5 text-center">
+            Already have an account? <a href="<?= base_url('login')?>">Login</a>
+        </div>
+    </form>
+    </div>

@@ -1,4 +1,5 @@
-<h1><?= $title ?></h1>
+<h1 class="p-5"><?= $title ?></h1>
+
 <?= session()->getFlashdata('error') ?>
 <?= validation_list_errors() ?>
 
@@ -9,23 +10,33 @@
     </div>
 <?php endif; ?>
 
-<form method='post' action='<?= base_url('/signup') ?>'>
-    <label for="email">Email</label>
-    <input name="email" type="email" />
-    <br/>
-    <label for="password">Password</label>
-    <input name="password" type="password"/>
-    <br/>
-    <label for="cpassword">Confirm Password</label>
-    <input name="cpassword" type="password"/>
-    </br>
-    <label for="security-question">Security question</label>
-    <input name="security-question" type="text"/>
-    </br>
-    <label for="security-answer">Security answer</label>
-    <input name="security-answer" type="text"/>
-    </br>
-    <button type="submit">Sign up</button>
-    </br>
-    Already have an account? <a href="<?= base_url('login')?>">Login</a>
-</form>
+<div class="p-5">
+    <form method='post' action='<?= base_url('/signup') ?>'>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input name="email" type="email" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input name="password" type="password" class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label for="cpassword" class="form-label">Confirm Password</label>
+            <input name="cpassword" type="password"class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label for="security-question" class="form-label">Security question</label>
+            <input name="security-question" type="text" class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label for="security-answer" class="form-label">Security answer</label>
+            <input name="security-answer" type="text" class="form-control"/>
+        </div>
+        <div class="mb-3 text-center">
+            <button type="submit" class="btn btn-primary">Sign up</button>
+        </div>
+        <div class="mb-3 text-center">
+            Already have an account? <a href="<?= base_url('login')?>">Login</a>
+        </div>
+    </form>
+</div>
