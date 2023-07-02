@@ -96,15 +96,20 @@ class UserAuthentication extends BaseController
                     . view("authentication/signup")
                     . view("layouts/footer");
         }
-        $model = model(UserAuthenticationModel::class);
+
+        // Models
+        $user_model = model(UserAuthenticationModel::class);
 
         error_log($post_data['security-question']);
         error_log($post_data['security-answer']);
-        $model->save([
+
+        // Save to user
+        $user_model->save([
             'email' => $post_data['email'],
             'password' => md5($post_data['password']),
             'security_question' => $post_data['security-question'],
-            'security_answer' => $post_data['security-answer']
+            'security_answer' => $post_data['security-answer'],
+            'account_balance' => 0
         ]);
 
 

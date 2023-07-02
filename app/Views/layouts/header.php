@@ -20,4 +20,10 @@
       </div>
     </div>
   </div>
+
+  <?php if(session()->get('email')) : ?>
+    <p>
+      <strong>Welcome back</strong>, <?= session()->get('email') ?>
+    </p>
+  <?php endif; ?>
 </nav>

@@ -9,6 +9,10 @@
             <input name="from" type="text" class="form-control"/>
         </div>
         <div class="mb-3">
+            <label for="to" class="form-label">To</label>
+            <input name="to" type="text" class="form-control"/>
+        </div>
+        <div class="mb-3">
             <label for="amount" class="form-label">Amount ($)</label>
             <input name="amount" type="number" class="form-control"/>
         </div>

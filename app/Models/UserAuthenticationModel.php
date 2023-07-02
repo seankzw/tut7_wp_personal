@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserAuthentication extends Model
+class UserAuthenticationModel extends Model
 {
     protected $table = 'users';
-    protected $allowedFields = ['id','email','password', 'security_question', 'security_answer'];
+    protected $allowedFields = ['id','email','password', 'security_question', 'security_answer', 'account_balance'];
 
     public function getUserId($email){
         $data = $this->where(['email' => $email])->first();
@@ -56,5 +56,15 @@ class UserAuthentication extends Model
         }else{
             return false;
         }
+    }
+
+    public function getBal($email){
+        $data = $this->where(['email' => $email])->first();
+        return $data['account_balance'];
+    }
+
+    public function deposit($email, $amt){
+        $data = $this->where(['email' => $email])->first();
+        return $this->where(['email' => $email])->set(['account_balance' => $amt + $data['account_balance']])->update();
     }
 }

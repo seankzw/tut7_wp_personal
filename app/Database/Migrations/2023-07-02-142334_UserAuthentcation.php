@@ -13,7 +13,8 @@ class UserAuthentication extends Migration
             'email' => ['type'=> 'VARCHAR', 'constraint' => 200],
             'password'=>['type'=>'VARCHAR', 'constraint' => 200],
             'security_question'=>['type'=>'VARCHAR', 'constraint' => 200],
-            'security_answer'=>['type'=>'VARCHAR', 'constraint' => 200]
+            'security_answer'=>['type'=>'VARCHAR', 'constraint' => 200],
+            'account_balance'=>['type'=>'decimal', 'constraint' => '10,2'],
         ]);
 
         $this->forge->addKey('id',true);
