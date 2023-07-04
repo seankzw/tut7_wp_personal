@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\CategoriesModel;
 use App\Models\TransactionModel;
 use App\Models\UserAuthenticationModel;
 use Config\Services;
@@ -26,22 +27,26 @@ class Transaction extends BaseController
 
     public function newTransaction(){
         helper('form');
+        $category_model = model(CategoriesModel::class);
 
         $data = [
             "title" => "New transaction"
         ];
 
         if(!$this->request->is('post')){
+            $data['categories'] = $category_model->getCategories(session()->get('id'));
+
             return view('layouts/header', $data)
                 . view('transaction/new')
                 . view('layouts/footer');
         }
 
-        $post_data = $this->request->getPost(['from','to','amount']);
+        $post_data = $this->request->getPost(['date','desc','category','amount']);
 
         if(!$this->validateData($post_data, [
-            'from' => 'required',
-            'to' => 'required',
+            'date' => 'required',
+            'desc' => 'required',
+            'category' => 'required',
             'amount' => 'required'
         ])){
             session()->setFlashdata("error","Validation fail");
@@ -57,14 +62,17 @@ class Transaction extends BaseController
 
         //add to transaction
         $trans_model->save([
-            'from' => $post_data['from'],
-            'to' => $post_data['to'],
-            'amount' => $post_data['amount']
+            'date' => $post_data['date'],
+            'desc' => $post_data['desc'],
+            'category' => $post_data['category'],
+            'amount' => $post_data['amount'],
+            'user_id' => session()->get('id')
         ]);
 
         //Increase balance
-        $user_model->deposit($post_data['to'], $post_data['amount']);
+        $user_model->deposit(session()->get('id'), $post_data['amount']);
 
+        $data['categories'] = $category_model->getCategories(session()->get('id'));
 
         return view('layouts/header', $data)
             . view('transaction/new')

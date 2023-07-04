@@ -58,13 +58,13 @@ class UserAuthenticationModel extends Model
         }
     }
 
-    public function getBal($email){
-        $data = $this->where(['email' => $email])->first();
+    public function getBal($id){
+        $data = $this->where(['id' => $id])->first();
         return $data['account_balance'];
     }
 
-    public function deposit($email, $amt){
-        $data = $this->where(['email' => $email])->first();
-        return $this->where(['email' => $email])->set(['account_balance' => $amt + $data['account_balance']])->update();
+    public function deposit($user_id, $amt){
+        $data = $this->where(['id' => $user_id])->first();
+        return $this->where(['id' => $user_id])->set(['account_balance' => $amt + $data['account_balance']])->update();
     }
 }

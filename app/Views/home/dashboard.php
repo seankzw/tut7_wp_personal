@@ -12,13 +12,13 @@
         <div class="card-body">
             <h5 class="card-title">Recent transaction</h5>
             <?php if($latestTrans) : ?>
-                <strong class="card-text"><?= $latestTrans['from'] ?></strong>
+                <strong class="card-text"><?= $latestTrans['desc'] ?></strong>
                 <?php if($latestTrans['amount'] > 0): ?>
-                    <p class="card-text text-success"><strong>+</strong><?= number_format($latestTrans['amount']) ?></p>
+                    <p class="card-text text-success"><strong>+$</strong><?= number_format($latestTrans['amount'],2) ?></p>
                 <?php else: ?>
                     <p class="card-text text-danger"><strong>-</strong><?= number_format($latestTrans['amount'],2) ?></p>
                 <?php endif; ?>
-                <p class="card-subtitle fst-italic mb-3">Last update <?= date("d M, Gi",$latestTrans['created_date'])?>hrs</p>
+                <p class="card-subtitle fst-italic mb-3">Last update <?= date("d M, Gi",$latestTrans['date'])?>hrs</p>
                 <a href="<?= base_url('transaction') ?>" class="btn btn-primary">Button</a>
             <?php else: ?>
                 <p class="card-subtitle mb-3"><i>No transaction yet</i></p>

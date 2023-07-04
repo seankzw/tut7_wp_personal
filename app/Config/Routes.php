@@ -30,19 +30,29 @@ $routes->set404Override();
  use App\Controllers\UserAuthentication;
  use App\Controllers\Home;
  use App\Controllers\Transaction;
+ use App\Controllers\Categories;
+
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', [UserAuthentication::class, 'login']);
 
+//Home/Dashboard
+$routes->get("/dashboard", [Home::class, 'index']);
+
+// User authentication
 $routes->match(['get','post'], '/login', [UserAuthentication::class, 'login']);
 $routes->match(['get','post'], '/signup', [UserAuthentication::class, 'signup']);
-$routes->get("/dashboard", [Home::class, 'index']);
 $routes->get('/signout', [UserAuthentication::class, 'signout']);
 $routes->match(['get','post'],'/reset', [UserAuthentication::class, 'reset']);
 $routes->match(['get','post'],'/reset/(:num)', [UserAuthentication::class, 'resetUser']);
+
+// Transaction
 $routes->get('/transaction', [Transaction::class, 'index']);
 $routes->match(['get','post'],'/transaction/new', [Transaction::class, 'newTransaction']);
+
+//Categories
+$routes->match(['get','post'],'/category/new', [Categories::class, 'new']);
 
 
 /*

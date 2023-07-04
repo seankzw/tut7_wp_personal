@@ -11,15 +11,19 @@ class Home extends BaseController
 
         $transModel = new TransactionModel();
         $user = new UserAuthenticationModel();
-        $latestTrans = $transModel->getLatestTransaction();
-        $acc_bal = $user->getBal(session()->get('email'));
+        $latestTrans = $transModel->getLatestTransaction(session()->get('id'));
+        $acc_bal = $user->getBal(session()->get('id'));
 
         if(session()->get('email') == null){
             return redirect()->route('login');
         }
         $data['title'] = 'Dashboard here';
-        $latestTrans['created_date'] = strtotime($latestTrans['created_date']);
-        error_log($latestTrans['created_date']);
+
+        if($latestTrans == null){
+            $latestTrans['date'] = null;
+        }
+
+        $latestTrans['date'] = strtotime($latestTrans['date']);
 
 
         $data = [

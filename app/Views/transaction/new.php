@@ -4,20 +4,36 @@
 
 <div class="p-5">
     <form method='post' action='<?= base_url('/transaction/new') ?>'>
+        <!-- Income and expenses -->
+        <!-- Date, Description, category, amount -->
         <div class="mb-3">
-            <label for="from" class="form-label">From</label>
-            <input name="from" type="text" class="form-control"/>
+            <label for="date" class="form-label">Date</label>
+            <input name="date" type="date" class="form-control"/>
         </div>
+
         <div class="mb-3">
-            <label for="to" class="form-label">To</label>
-            <input name="to" type="text" class="form-control"/>
+            <label for="desc" class="form-label">Description</label>
+            <textarea name="desc" class="form-control"></textarea>
         </div>
+
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <div class="mb-3 d-flex">
+                <select name="category" class='form-select'>
+                    <option value=""></option>
+                    <?php foreach($categories as $category) :?>
+                        <option value="<?= $category['id'] ?>"><?=$category['name']?></option>
+                    <?php endforeach; ?>
+                </select>
+                <a href="<?= base_url("/category/new") ?>" class="btn btn-info">Add new category</a>
+            </div>
+        </div>
+
         <div class="mb-3">
             <label for="amount" class="form-label">Amount ($)</label>
-            <input name="amount" type="number" class="form-control"/>
+            <input name="amount" step="any" type="number" class="form-control"/>
         </div>
-        <div class="mb-3 text-center">
-            <button type="submit" class="btn btn-primary">Login</button>
-        </div>
+
+        <button type="submit" class='btn btn-primary'>Add expenses</button>
     </form>
 </div>

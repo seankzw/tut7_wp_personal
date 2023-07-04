@@ -196,20 +196,6 @@ class UserAuthentication extends BaseController
 
         }
 
-
-
-
-
-    }
-
-    public function resetUser($id = null){
-        $model = model(UserAuthenticationModel::class);
-        $user = $model->getSecurityQuestion($id);
-        error_log(print_r($user));
-
-        return view("layouts/header", ['title'=>'Password reset'])
-                . view("authentication/reset")
-                . view("layouts/footer");
     }
 
     private function random_password() {
