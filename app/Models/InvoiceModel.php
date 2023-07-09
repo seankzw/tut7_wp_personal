@@ -41,6 +41,15 @@ class InvoiceModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+    public function getColumns(){
+        return $this->allowedFields;
+    }
+
+    public function getFieldData(){
+        $db = $this->db->getFieldData($this->table);
+        return $db;
+    }
+
     public function getInvoices(){
         return $this->findAll();
     }
