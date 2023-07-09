@@ -19,7 +19,7 @@ class TransactionModel extends Model
         if(!$data){
             return null;
         }
-
+        error_log("=== Found data ===");
         return $data;
     }
 }

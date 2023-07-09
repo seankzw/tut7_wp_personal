@@ -35,6 +35,7 @@ class Transaction extends BaseController
 
         if(!$this->request->is('post')){
             $data['categories'] = $category_model->getCategories(session()->get('id'));
+            $data['curr_date'] = Date('d/m/Y');
 
             return view('layouts/header', $data)
                 . view('transaction/new')

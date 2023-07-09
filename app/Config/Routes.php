@@ -31,6 +31,7 @@ $routes->set404Override();
  use App\Controllers\Home;
  use App\Controllers\Transaction;
  use App\Controllers\Categories;
+ use App\Controllers\Invoice;
 
 
 // We get a performance increase by specifying the default
@@ -54,11 +55,15 @@ $routes->match(['get','post'],'/transaction/new', [Transaction::class, 'newTrans
 //Categories
 $routes->match(['get','post'],'/category/new', [Categories::class, 'new']);
 
+//Invoices
+$routes->get('/invoice', [Invoice::class, 'index']);
+$routes->match(['get','post'],'/invoice/new', [Invoice::class, 'new']);
+
 
 /*
  * --------------------------------------------------------------------
  * Additional Routing
- * --------------------------------------------------------------------
+* --------------------------------------------------------------------
  *
  * There will often be times that you need additional routing and you
  * need it to be able to override any defaults in this file. Environment

@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class UserAuthenticationModel extends Model
 {
-    protected $table = 'users';
+    protected $table = 'users_sk';
     protected $allowedFields = ['id','email','password', 'security_question', 'security_answer', 'account_balance'];
 
     public function getUserId($email){
@@ -60,7 +60,8 @@ class UserAuthenticationModel extends Model
 
     public function getBal($id){
         $data = $this->where(['id' => $id])->first();
-        return $data['account_balance'];
+        //return $data['account_balance'];
+        return 100;
     }
 
     public function deposit($user_id, $amt){
