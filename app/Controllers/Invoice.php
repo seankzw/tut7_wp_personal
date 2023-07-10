@@ -40,7 +40,6 @@ class Invoice extends BaseController
         $post_data = $this->request->getPost($invoiceModel->getColumns());
 
         $toSave = [];
-
         for($i=0;$i<count($post_data);$i++){
             $toSave[$data['columns'][$i]->name] = $post_data[$data['columns'][$i]->name];
         }

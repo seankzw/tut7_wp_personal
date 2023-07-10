@@ -33,7 +33,6 @@ $routes->set404Override();
  use App\Controllers\Categories;
  use App\Controllers\Invoice;
 
-
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', [UserAuthentication::class, 'login']);
@@ -58,6 +57,7 @@ $routes->match(['get','post'],'/category/new', [Categories::class, 'new']);
 //Invoices
 $routes->get('/invoice', [Invoice::class, 'index']);
 $routes->match(['get','post'],'/invoice/new', [Invoice::class, 'new']);
+
 
 
 /*

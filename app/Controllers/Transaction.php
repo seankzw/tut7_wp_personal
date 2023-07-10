@@ -20,6 +20,7 @@ class Transaction extends BaseController
             'transactions' => $transactions
         ];
 
+
         return view('layouts/header', $data)
                 . view('transaction/index')
                 . view('layouts/footer');

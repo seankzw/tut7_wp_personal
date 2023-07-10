@@ -44,4 +44,5 @@ class Home extends BaseController
                 . view('home/dashboard')
                 . view('layouts/footer');
     }
+
 }
